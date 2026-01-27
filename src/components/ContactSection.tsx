@@ -7,7 +7,8 @@ import {
   Send,
   Github,
   Linkedin,
-  Twitter,
+  ArrowUpRight,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -61,10 +62,10 @@ export const ContactSection = () => {
     setIsSubmitting(true);
 
     // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     toast({
-      title: "Mensagem enviada!",
+      title: "✓ Mensagem enviada!",
       description: "Obrigado pelo contato. Responderei em breve!",
     });
 
@@ -73,39 +74,55 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-32" ref={ref}>
-      <div className="section-container">
+    <section id="contact" className="py-24 md:py-32 relative" ref={ref}>
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-t from-secondary/30 via-transparent to-transparent" />
+
+      <div className="section-container relative">
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, x: -50 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ type: "spring", stiffness: 80, damping: 15 }}
+          className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-16 h-0.5 bg-primary" />
+            <span className="text-sm font-mono text-primary uppercase tracking-widest">
+              // contact
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             Entre em <span className="gradient-text">Contato</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg max-w-2xl">
             Tem um projeto em mente? Vamos conversar e transformar sua ideia em
             realidade
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{
+              type: "spring",
+              stiffness: 80,
+              damping: 15,
+              delay: 0.2,
+            }}
           >
             <h3 className="text-2xl font-semibold mb-6">
               Vamos trabalhar juntos
             </h3>
-            <p className="text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
               Estou sempre aberto a novos projetos e oportunidades. Se você tem
               uma ideia que gostaria de discutir, não hesite em entrar em
               contato.
             </p>
 
+            {/* Contact Cards */}
             <div className="space-y-4 mb-8">
               {contactInfo.map((item, index) => (
                 <motion.a
@@ -113,35 +130,45 @@ export const ContactSection = () => {
                   href={item.href}
                   initial={{ opacity: 0, x: -20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  className="flex items-center gap-4 p-4 rounded-lg bg-secondary/50 hover:bg-primary/10 transition-all duration-300 group"
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 12,
+                    delay: 0.3 + index * 0.1,
+                  }}
+                  className="contact-card"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 border-2 border-transparent flex items-center justify-center group-hover:border-primary/30 transition-all">
                     <item.icon className="w-5 h-5 text-primary" />
                   </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-mono text-muted-foreground uppercase tracking-wide mb-1">
                       {item.label}
                     </div>
-                    <div className="font-medium">{item.value}</div>
+                    <div className="font-medium text-foreground truncate">
+                      {item.value}
+                    </div>
                   </div>
+                  {item.href !== "#" && (
+                    <ArrowUpRight className="w-4 h-4 text-muted-foreground" />
+                  )}
                 </motion.a>
               ))}
             </div>
 
             {/* Social Links */}
             <div>
-              <h4 className="text-sm font-medium text-muted-foreground mb-4">
-                Me siga nas redes
+              <h4 className="text-sm font-mono text-muted-foreground uppercase tracking-wide mb-4">
+                // social
               </h4>
-              <div className="flex gap-4">
+              <div className="flex gap-3">
                 {socialLinks.map((social) => (
                   <a
                     key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="social-icon"
+                    className="social-btn"
                     aria-label={social.label}
                   >
                     <social.icon size={20} />
@@ -153,16 +180,21 @@ export const ContactSection = () => {
 
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{
+              type: "spring",
+              stiffness: 80,
+              damping: 15,
+              delay: 0.3,
+            }}
           >
-            <form onSubmit={handleSubmit} className="glass-card p-6 md:p-8">
+            <form onSubmit={handleSubmit} className="solid-card p-6 md:p-8">
               <div className="space-y-6">
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium mb-2"
+                    className="block text-sm font-mono text-muted-foreground uppercase tracking-wide mb-2"
                   >
                     Nome
                   </label>
@@ -174,14 +206,14 @@ export const ContactSection = () => {
                     }
                     placeholder="Seu nome completo"
                     required
-                    className="bg-secondary/50 border-border/50 focus:border-primary"
+                    className="form-input"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium mb-2"
+                    className="block text-sm font-mono text-muted-foreground uppercase tracking-wide mb-2"
                   >
                     Email
                   </label>
@@ -194,14 +226,14 @@ export const ContactSection = () => {
                     }
                     placeholder="seu@email.com"
                     required
-                    className="bg-secondary/50 border-border/50 focus:border-primary"
+                    className="form-input"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-sm font-medium mb-2"
+                    className="block text-sm font-mono text-muted-foreground uppercase tracking-wide mb-2"
                   >
                     Mensagem
                   </label>
@@ -214,21 +246,24 @@ export const ContactSection = () => {
                     placeholder="Conte-me sobre seu projeto..."
                     rows={5}
                     required
-                    className="bg-secondary/50 border-border/50 focus:border-primary resize-none"
+                    className="form-input resize-none"
                   />
                 </div>
 
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-effect"
+                  className="w-full btn-primary h-auto"
                   size="lg"
                 >
                   {isSubmitting ? (
-                    "Enviando..."
+                    <>
+                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      Enviando...
+                    </>
                   ) : (
                     <>
-                      <Send className="w-4 h-4 mr-2" />
+                      <Send className="w-5 h-5 mr-2" />
                       Enviar Mensagem
                     </>
                   )}
