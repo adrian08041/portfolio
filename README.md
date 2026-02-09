@@ -44,7 +44,7 @@ Este projeto não é apenas uma vitrine, é uma **experiência imersiva**. Desen
 
 ### ⚡ Destaques do Projeto:
 
-- **Fundo "Matrix Rain":** Efeito de chuva digital gerado proceduralmente em Canvas HTML5.
+- **Fundo "Matrix Rain":** Efeito de chuva digital.
 - **Paisagem Sonora Imersiva:** Motores de áudio sintetizados via Web Audio API para feedback de `hover` e `digitação` (som mecânico).
 - **Cursor Personalizado:** Cursor vetorizado com retícula de mira dinâmica e rastreamento suave.
 - **Sequência de Carregamento CRT:** Tela de boot inspirada em sistemas legados/cyberpunk.
