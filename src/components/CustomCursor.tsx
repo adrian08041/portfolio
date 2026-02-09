@@ -39,7 +39,8 @@ export const CustomCursor = () => {
     };
 
     const handleMouseOut = (e: MouseEvent) => {
-      if (!e.relatedTarget && !e.toElement) {
+      // relatedTarget is null when mouse leaves the document
+      if (!e.relatedTarget) {
         setIsVisible(false);
       }
     };
